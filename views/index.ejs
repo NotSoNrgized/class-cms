@@ -1,20 +1,18 @@
-console.log("Node version: " + process.version);
+<%- include("partials/header") %>
 
-require("express");
-console.log("[ok] express");
+<h2>Latest Posts</h2>
 
-require("ejs");
-console.log("[ok] ejs");
+<% if (posts.length === 0) { %>
+    <p>No posts available.</p>
+<% } %>
+    <ul>
+        
+<% posts.forEach(post => { %>
+    <article class="post-card">
+        <h3><a href="/post/<%= post.id %>"><%= post.title %></a></h3>
+        <p class=""meta><%= post.created_at %></p>
+        <p><%= post.body.substring(0, 100) %></p>
+    </article>
+<% }) %>
 
-require("express-session");
-console.log("[ok] express-session");
-
-require("bcryptjs");
-console.log("[ok] bcryptjs");
-
-const { DatabaseSync } = require("node:sqlite");
-const testDb = new DatabaseSync(":memory:");
-testDb.exec("CREATE TABLE test (id INTEGER)");
-console.log("[ok] sqlite");
-
-console.log("Your stack is ready!");
+<%- include("partials/footer") %>
